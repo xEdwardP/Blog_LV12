@@ -29,8 +29,8 @@ class CategoryController extends Controller
 
         session()->flash('swal', [
             'icon' => 'success',
-            'title' => 'Exito',
-            'text' => 'La categoria se ha creado correctamente'
+            'title' => 'Éxito',
+            'text' => 'La categoría se ha creado correctamente'
         ]);
 
         return redirect()->route('admin.categories.index');
@@ -56,8 +56,8 @@ class CategoryController extends Controller
 
         session()->flash('swal', [
             'icon' => 'success',
-            'title' => 'Exito',
-            'text' => 'La categoria se ha actualizado correctamente'
+            'title' => 'Éxito',
+            'text' => 'La categoría se ha actualizado correctamente'
         ]);
 
         return redirect()->route('admin.categories.index');
@@ -69,8 +69,8 @@ class CategoryController extends Controller
 
         session()->flash('swal', [
             'icon' => 'success',
-            'title' => 'Exito',
-            'text' => 'La categoria se ha eliminado correctamente'
+            'title' => 'Éxito',
+            'text' => 'La categoría se ha eliminado correctamente'
         ]);
 
         return redirect()->route('admin.categories.index');
