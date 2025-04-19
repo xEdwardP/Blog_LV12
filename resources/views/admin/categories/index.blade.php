@@ -34,8 +34,16 @@
                             {{ $item->name }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="{{ route('admin.categories.edit', $item->id) }}"
-                                class="btn btn-blue text-xs">Editar</a>
+                            <div class="flex space-x-2">
+                                <a href="{{ route('admin.categories.edit', $item->id) }}"
+                                    class="btn btn-yellow text-xs">Editar</a>
+
+                                <form action="{{ route('admin.categories.destroy', $item->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-red text-xs">Eliminar</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
