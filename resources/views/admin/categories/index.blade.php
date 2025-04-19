@@ -5,7 +5,7 @@
             <flux:breadcrumbs.item>Categorias</flux:breadcrumbs.item>
         </flux:breadcrumbs>
 
-        <a href="{{route('admin.categories.create')}}" class="btn btn-blue text-xs">Nuevo</a>
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-blue text-xs">Nuevo</a>
     </div>
 
     <div class="relative overflow-x-auto">
@@ -18,7 +18,7 @@
                     <th scope="col" class="px-6 py-3">
                         Nombre
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3" width="10px">
                         Acciones
                     </th>
                 </tr>
@@ -34,7 +34,8 @@
                             {{ $item->name }}
                         </td>
                         <td class="px-6 py-4">
-                            Acciones
+                            <a href="{{ route('admin.categories.edit', $item->id) }}"
+                                class="btn btn-blue text-xs">Editar</a>
                         </td>
                     </tr>
                 @endforeach

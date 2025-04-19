@@ -32,7 +32,7 @@ class CategoryController extends Controller
             'title' => 'Exito',
             'text' => 'La categoria se ha creado correctamente'
         ]);
-        
+
         return redirect()->route('admin.categories.index');
     }
 
@@ -43,12 +43,24 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit', compact('category'));
     }
 
     public function update(Request $request, Category $category)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $category->update($data);
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Exito',
+            'text' => 'La categoria se ha actualizado correctamente'
+        ]);
+
+        return redirect()->route('admin.categories.index');
     }
 
     public function destroy(Category $category)
