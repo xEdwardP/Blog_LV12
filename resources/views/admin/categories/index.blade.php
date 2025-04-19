@@ -1,8 +1,12 @@
 <x-layouts.app>
-    <flux:breadcrumbs class="mb-8">
-        <flux:breadcrumbs.item href="{{ route('dashboard') }}">Inicio</flux:breadcrumbs.item>
-        <flux:breadcrumbs.item>Categorias</flux:breadcrumbs.item>
-    </flux:breadcrumbs>
+    <div class="mb-4 flex justify-between items=center">
+        <flux:breadcrumbs>
+            <flux:breadcrumbs.item href="{{ route('dashboard') }}">Inicio</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item>Categorias</flux:breadcrumbs.item>
+        </flux:breadcrumbs>
+
+        <a href="{{route('admin.categories.create')}}" class="btn btn-blue text-xs">Nuevo</a>
+    </div>
 
     <div class="relative overflow-x-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
