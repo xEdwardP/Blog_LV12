@@ -62,7 +62,7 @@
                     Swal.fire({
                         title: "Confirmación",
                         text: "¿Está seguro(a) que desea eliminar este registro?",
-                        icon: "warning",
+                        icon: "question",
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
