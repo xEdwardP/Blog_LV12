@@ -5,10 +5,25 @@
         <flux:breadcrumbs.item>Editar</flux:breadcrumbs.item>
     </flux:breadcrumbs>
 
-    <div class="card">
-        <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" class="space-y-4">
-            @csrf
-            @method('PUT')
+    <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" class="space-y-4"
+        enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="relative mb-2">
+            {{-- <img id="imgPreview" class="w-full aspect-video object-cover object-center"
+                src="{{ $post->image_path ? Storage::url($post->image_path) : 'https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg' }}"
+                alt="Imagen del post"> --}}
+            <img id="imgPreview" class="w-full aspect-video object-cover object-center"
+                src="{{ $post->image_path ? asset('storage/'.$post->image_path) : 'https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg' }}"
+                alt="Imagen del post">
+            <div class="absolute top-8 right-8">
+                <label for="image" class="bg-white px-4 py-2 rounded-lg cursor-pointer">
+                    Cambiar Imagen
+                    <input type="file" name="image" accept="image/*" onchange="previewImage(event, '#imgPreview')">
+                </label>
+            </div>
+        </div>
+        <div class="card space-y-4">
             <flux:input label="Titulo" id="title" name="title" value="{{ old('title', $post->title) }}"
                 placeholder="Ingrese el titulo de el post" />
 
@@ -18,14 +33,16 @@
             <flux:select label="Categoria" name="category_id" wire:model="category"
                 placeholder="Seleccione una categoria">
                 @foreach ($categories as $category)
-                    <flux:select.option value="{{ $category->id }}" :selected="$category->id == old('category_id', $post->category_id)">
+                    <flux:select.option value="{{ $category->id }}"
+                        :selected="$category->id == old('category_id', $post->category_id)">
                         {{ $category->name }}</flux:select.option>
                 @endforeach
             </flux:select>
 
-            <flux:textarea label="Resumen" name="excerpt">{{old('excerpt', $post->excerpt)}}</flux:textarea>
+            <flux:textarea label="Resumen" name="excerpt">{{ old('excerpt', $post->excerpt) }}</flux:textarea>
 
-            <flux:textarea label="Contenido" name="content" rows="16">{{old('content', $post->content)}}</flux:textarea>
+            <flux:textarea label="Contenido" name="content" rows="16">{{ old('content', $post->content) }}
+            </flux:textarea>
 
             <div class="flex space-x-3">
                 <label for="is_published" class="flex items-center">
@@ -42,35 +59,6 @@
             <div class="flex justify-end">
                 <flux:button variant="primary" type="submit">Enviar</flux:button>
             </div>
-        </form>
-    </div>
-
-    @push('js')
-        {{-- <script>
-            function string_to_slug(str, querySelector) {
-                // Eliminar espacios al inicio y final
-                str = str.replace(/^\s+|\s+$/g, '');
-
-                // Convertir todo a minúsculas
-                str = str.toLowerCase();
-
-                // Definir caracteres especiales y sus reemplazos
-                var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-                var to = "aaaaeeeeiiiioooouuuunc------";
-
-                // Reemplazar caracteres especiales por los correspondientes en 'to'
-                for (var i = 0, l = from.length; i < l; i++) {
-                    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-                }
-
-                // Eliminar caracteres no alfanuméricos y reemplazar espacios por guiones
-                str = str.replace(/[^a-z0-9 -]/g, '')
-                    .replace(/\s+/g, '-')
-                    .replace(/-+/g, '-');
-
-                // Asignar el slug generado al campo de entrada correspondiente
-                document.querySelector(querySelector).value = str;
-            }
-        </script> --}}
-    @endpush
+        </div>
+    </form>
 </x-layouts.app>
