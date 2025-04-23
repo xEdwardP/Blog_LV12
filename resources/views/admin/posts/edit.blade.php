@@ -14,7 +14,7 @@
                 src="{{ $post->image_path ? Storage::url($post->image_path) : 'https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg' }}"
                 alt="Imagen del post"> --}}
             <img id="imgPreview" class="w-full aspect-video object-cover object-center"
-                src="{{ $post->image_path ? asset('storage/'.$post->image_path) : 'https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg' }}"
+                src="{{ $post->image_path ? asset('storage/' . $post->image_path) : 'https://thumb.ac-illust.com/b1/b170870007dfa419295d949814474ab2_t.jpeg' }}"
                 alt="Imagen del post">
             <div class="absolute top-8 right-8">
                 <label for="image" class="bg-white px-4 py-2 rounded-lg cursor-pointer">
@@ -44,16 +44,35 @@
             <flux:textarea label="Contenido" name="content" rows="16">{{ old('content', $post->content) }}
             </flux:textarea>
 
-            <div class="flex space-x-3">
-                <label for="is_published" class="flex items-center">
-                    <input type="radio" name="is_published" value="0" @checked(old('is_published', $post->is_published) == 0)>
-                    <span class="ml-1">No publicado</span>
-                </label>
+            <div>
+                <p class="text-sm font-medium mb-1">Etiquetas</p>
 
-                <label for="is_published" class="flex items-center">
-                    <input type="radio" name="is_published" value="1" @checked(old('is_published', $post->is_published) == 1)>
-                    <span class="ml-1">Publicado</span>
-                </label>
+                <ul>
+                    @foreach ($tags as $tag)
+                        <li>
+                            <label for="{{'tag' . $tag->id}}" class="flex items-center space-x-2">
+                                <input type="checkbox" name="tags[]" id="{{'tag' . $tag->id}}" 
+                                value="{{ $tag->id }}" 
+                                @checked(in_array($tag->id, old('tags', $post->tags->pluck('id')->toArray())))><span>{{ $tag->name }}</span>
+                            </label>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div>
+                <p class="text-sm font-medium mb-1">Estado</p>
+                <div class="flex space-x-3">
+                    <label for="is_published" class="flex items-center">
+                        <input type="radio" name="is_published" value="0" @checked(old('is_published', $post->is_published) == 0)>
+                        <span class="ml-1">No publicado</span>
+                    </label>
+
+                    <label for="is_published" class="flex items-center">
+                        <input type="radio" name="is_published" value="1" @checked(old('is_published', $post->is_published) == 1)>
+                        <span class="ml-1">Publicado</span>
+                    </label>
+                </div>
             </div>
 
             <div class="flex justify-end">
