@@ -1,4 +1,9 @@
 <x-layouts.app>
+
+    @push('css')
+        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    @endpush
+
     <flux:breadcrumbs class="mb-4">
         <flux:breadcrumbs.item href="{{ route('dashboard') }}">Inicio</flux:breadcrumbs.item>
         <flux:breadcrumbs.item href="{{ route('admin.posts.index') }}">Posts</flux:breadcrumbs.item>
@@ -41,8 +46,14 @@
 
             <flux:textarea label="Resumen" name="excerpt">{{ old('excerpt', $post->excerpt) }}</flux:textarea>
 
-            <flux:textarea label="Contenido" name="content" rows="16">{{ old('content', $post->content) }}
-            </flux:textarea>
+            {{-- <flux:textarea label="Contenido" name="content" rows="16">{{ old('content', $post->content) }}</flux:textarea> --}}
+
+            <div>
+                <p class="font-medium text-sm mb-1">Contenido</p>
+                <div id="editor">{!! old('content', $post->content) !!}</div>
+
+                <textarea class="hidden" name="content" id="content">{{ old('content', $post->content) }}</textarea>
+            </div>
 
             <div>
                 <p class="text-sm font-medium mb-1">Etiquetas</p>
@@ -50,10 +61,10 @@
                 <ul>
                     @foreach ($tags as $tag)
                         <li>
-                            <label for="{{'tag' . $tag->id}}" class="flex items-center space-x-2">
-                                <input type="checkbox" name="tags[]" id="{{'tag' . $tag->id}}" 
-                                value="{{ $tag->id }}" 
-                                @checked(in_array($tag->id, old('tags', $post->tags->pluck('id')->toArray())))><span>{{ $tag->name }}</span>
+                            <label for="{{ 'tag' . $tag->id }}" class="flex items-center space-x-2">
+                                <input type="checkbox" name="tags[]" id="{{ 'tag' . $tag->id }}"
+                                    value="{{ $tag->id }}"
+                                    @checked(in_array($tag->id, old('tags', $post->tags->pluck('id')->toArray())))><span>{{ $tag->name }}</span>
                             </label>
                         </li>
                     @endforeach
@@ -80,4 +91,20 @@
             </div>
         </div>
     </form>
+
+    @push('js')
+        <!-- Include the Quill library -->
+        <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+        <!-- Initialize Quill editor -->
+        <script>
+            const quill = new Quill('#editor', {
+                theme: 'snow'
+            });
+
+            quill.on('text-change', function(){
+                document.querySelector('#content').value = quill.root.innerHTML;
+            });
+        </script>
+    @endpush
 </x-layouts.app>
