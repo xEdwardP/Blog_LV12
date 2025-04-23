@@ -56,7 +56,7 @@
         {{ $items->links() }}
     </div>
 
-    {{-- @push('js')
+    @push('js')
         <script>
             forms = document.querySelectorAll('.delete-form');
             forms.forEach(form => {
@@ -80,5 +80,5 @@
                 });
             });
         </script>
-    @endpush --}}
+    @endpush
 </x-layouts.app>
